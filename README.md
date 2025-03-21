@@ -2,6 +2,7 @@
 
 ## Project setup
 ```
+Axios(HTTP non- synchronization library that uses Promase API)
 npm install
 ```
 
