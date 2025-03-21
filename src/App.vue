@@ -1,19 +1,17 @@
 <template>
   <Header/>
-  <Home/>
+  <RouterView/>
   <Footer/>
 </template>
 
 <script>
 import VueHeader from "@/components/VueHeader.vue";
-import VueHome from "@/pages/VueHome.vue";
 import VueFooter from "@/components/VueFooter.vue";
 
 export default {
   name: 'App',
   components: {
     Header: VueHeader,
-    Home: VueHome,
     Footer: VueFooter,
   }
 }
