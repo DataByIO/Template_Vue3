@@ -5,6 +5,7 @@
 npm install
 npm install axios //(HTTP non- synchronization library that uses Promase API)
 npm install vue-router
+npm install vuex@next --save
 
 ```
 
