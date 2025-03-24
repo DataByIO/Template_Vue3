@@ -40,7 +40,8 @@ export default {
   name: 'VueHeader',
   setup(){
     const logout = () => {
-      store.commit("setAccount",0)
+      store.commit("setAccount",0);
+      sessionStorage.removeItem("id");// 로그인 정보가 없으면 sessionStorage에 id값을 비워줌
       router.push({path:"/"});
     }
     return {logout};

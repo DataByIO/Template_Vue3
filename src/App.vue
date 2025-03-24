@@ -7,12 +7,31 @@
 <script>
 import VueHeader from "@/components/VueHeader.vue";
 import VueFooter from "@/components/VueFooter.vue";
+import store from "@/scripts/store";
+import axios from "axios";
+import {useRoute} from "vue-router";
+import {watch} from "vue";
 
 export default {
   name: 'App',
   components: {
     Header: VueHeader,
     Footer: VueFooter,
+  },
+  setup(){
+    const check = ()=>{
+      axios.get("/api/account/check").then(({data})=>{
+        console.log(data)
+          store.commit("setAccount", data || 0);// 값이 있다면 data를, 없다면 0을 넣어줘라 (인라인으로 if-else를 구현함)
+      })
+    };
+
+    const route = useRoute();//현재 브라우저의 URL을 가져옴
+
+    //경로가 바뀔때 마다 감지 -> URL이 바뀔때 마다 Cookie에 값이 있는지 체크
+    watch(route, () => {
+      check();
+    })
   }
 }
 </script>

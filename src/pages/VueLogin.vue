@@ -30,7 +30,6 @@ import router from "@/scripts/router";
 
 export default {
   setup() {
-    //variable: state.from
     const state = reactive({
       from: {
         email: "",
@@ -42,8 +41,12 @@ export default {
       axios.post("/api/account/login", state.from).then((res) => {//axios를 이용하여 프론트엔드 단 데이터를 /api/account/login로 보내는데 state.from항목들을 보낼거다.
         //통신 완료시 store에 해당 id 정보를 넣어줌.
         store.commit('setAccount', res.data)
+        console.log("log Value::: " + res.data);
+        sessionStorage.setItem("id", res.data)// sessionStorage에 응답받은 ID값을 저장함
         router.push({path: "/"});
         window.alert("로그인하였습니다.");
+      }).catch(()=> {//로그인에 실패했을때 처리
+        window.alert("로그인 정보가 존재하지 않습니다.");
       })
 
     }
