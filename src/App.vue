@@ -24,6 +24,7 @@ export default {
         console.log(data)
           store.commit("setAccount", data || 0);// 값이 있다면 data를, 없다면 0을 넣어줘라 (인라인으로 if-else를 구현함)
       })
+
     };
 
     const route = useRoute();//현재 브라우저의 URL을 가져옴
