@@ -3,8 +3,8 @@
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     <div class="form-floating">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-             v-model="state.from.email">
-      <label for="floatingInput">Email address</label>
+             v-model="state.from.username">
+      <label for="floatingInput">Id address</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
@@ -31,8 +31,11 @@ import router from "@/scripts/router";
 export default {
   setup() {
     const state = reactive({
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
       from: {
-        email: "",
+        username: "",
         password: ""
       }
     })
@@ -40,7 +43,7 @@ export default {
     const submit = () => {//submit이라는 Function 선언
       //axios를 이용하여 프론트엔드 단 데이터를 /api/account/login로 보내는데 state.from항목들을 보낼거다.
       // 이때 state.from의 항목들은 Json(Key, Value) 형식으로 Controller에 넘어감
-      axios.post("/api/account/login", state.from).then((res) => {
+      axios.postForm("/login", state.from).then((res) => {
         //통신 완료시 store에 해당 id 정보를 넣어줌.
         store.commit('setAccount', res.data)
         console.log("log Value::: " + res.data);

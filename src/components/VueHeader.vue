@@ -10,7 +10,7 @@
                 <router-link to="/" class="text-white">메인화면</router-link>
               </li>
               <li>
-                <router-link to="/login" class="text-white" v-if="!$store.state.account.id">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
+                <router-link to="/loginpage" class="text-white" v-if="!$store.state.account.id">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
                 <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a> <!-- store영역에 반대로 값이 있다면 로그아웃 버튼 활성화 -->
               </li>
             </ul>
