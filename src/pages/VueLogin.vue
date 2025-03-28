@@ -48,7 +48,6 @@ export default {
         store.commit('setAccount', res.data)
         console.log("log Value::: " + res.data);
         sessionStorage.setItem("id", res.data)// sessionStorage에 응답받은 ID값을 저장함
-        router.push({path: "/"});
         window.alert("로그인하였습니다.");
       }).catch(()=> {//로그인에 실패했을때 처리
         window.alert("로그인 정보가 존재하지 않습니다.");
