@@ -21,6 +21,11 @@
 import axios from "axios";
 import {reactive} from "vue";
 import VueCard from "@/components/VueCard.vue";
+import store from '@/scripts/store';
+
+const token = store.state.token;
+
+console.log ("Home Token ::: " + token);
 
 export default {
   name: 'VueHome',

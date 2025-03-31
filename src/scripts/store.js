@@ -14,19 +14,13 @@ import { createStore } from 'vuex'
 
 // Create a new store instance.
 const store = createStore({
-    state () {
-        return {
-            account: {
-                id: 0
-            }
-        }
+    state: {
+        token: '',
     },
-    //commit('함수명, ‘전달인자’)` 방식으로 호출
-    //State 변경을 담당한다. 반드시 Mutation을 통해서만 State를 변경해야 한다
     mutations: {
-            setAccount(state, payload){
-                state.account.id = payload;
-            }
+        setToken(state, token) {
+            state.token = token;
+        },
     }
 })
 

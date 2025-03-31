@@ -10,7 +10,7 @@
                 <router-link to="/" class="text-white">메인화면</router-link>
               </li>
               <li>
-                <router-link to="/loginpage" class="text-white" v-if="!$store.state.account.id">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
+                <router-link to="/loginpage" class="text-white" v-if="!$store.state.token">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
                 <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a> <!-- store영역에 반대로 값이 있다면 로그아웃 버튼 활성화 -->
               </li>
             </ul>
@@ -34,17 +34,22 @@
 
 <script>
 import store from "@/scripts/store";
-import router from "@/scripts/router";
-
+import axios from "axios";
+//import router from "@/scripts/router";
+const accessToken = store.state.token;
+console.log ("Header Token ::: " + accessToken);
+axios.defaults.headers.common[
+    'Authorization'
+    ] = `${accessToken}`;
 export default {
   name: 'VueHeader',
-  setup(){
-    const logout = () => {
-      store.commit("setAccount",0);
-      sessionStorage.removeItem("id");// 로그인 정보가 없으면 sessionStorage에 id값을 비워줌
-      router.push({path:"/"});
-    }
-    return {logout};
-  }
+  // setup(){
+  //   const logout = () => {
+  //     //store.commit("setAccount",0);
+  //     //sessionStorage.removeItem("id");// 로그인 정보가 없으면 sessionStorage에 id값을 비워줌
+  //     //router.push({path:"/"});
+  //   }
+  //   return {logout};
+  // }
 }
 </script>
