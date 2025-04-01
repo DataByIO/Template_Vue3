@@ -45,16 +45,13 @@ export default {
       // 이때 state.from의 항목들은 Json(Key, Value) 형식으로 Controller에 넘어감
       axios.postForm("/login", state.from).then((res) => {
         //통신 완료시 store에 해당 id 정보를 넣어줌.
-        let accessToken = res.headers['authorization'];
-        axios.defaults.headers.common[
-            'Authorization'
-            ] = `${accessToken}`;
+        let accessToken = res.headers['access'];
         console.log("token::: " + accessToken);
         store.commit('token', accessToken)
         console.log("log Value::: " + res.data);
-        sessionStorage.setItem("token", accessToken)// sessionStorage에 응답받은 ID값을 저장함
-        window.alert("로그인하였습니다.");
         router.push({path: "/"});
+        localStorage.setItem("token", accessToken)// sessionStorage에 응답받은 ID값을 저장함
+        window.alert("로그인하였습니다.");
       }).catch(()=> {//로그인에 실패했을때 처리
         window.alert("로그인 정보가 존재하지 않습니다.");
       })

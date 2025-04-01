@@ -34,13 +34,9 @@
 
 <script>
 import store from "@/scripts/store";
-import axios from "axios";
 //import router from "@/scripts/router";
 const accessToken = store.state.token;
 console.log ("Header Token ::: " + accessToken);
-axios.defaults.headers.common[
-    'Authorization'
-    ] = `${accessToken}`;
 export default {
   name: 'VueHeader',
   // setup(){
