@@ -40,6 +40,9 @@ export default {
       state.items = data // 호출한 데이터를 state변수 안에 있는 items 배열에 담아줌
     })
 
+
+
+
     return {state}
   }
 }

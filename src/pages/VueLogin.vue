@@ -46,13 +46,23 @@ export default {
       axios.postForm("/login", state.from).then((res) => {
         //통신 완료시 store에 해당 id 정보를 넣어줌.
         let accessToken = res.headers['access'];
-        console.log("token::: " + accessToken);
+        axios.defaults.headers.common[
+            'access'
+            ] = `
+eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJuYW1lIjoi7YWM7Iqk7Yq4Iiwicm9sZSI6IlJPTEVfQURNSU4iLCJpYXQiOjE3NDM0OTAwMDAsImV4cCI6MTc0MzQ5MDYwMH0.KvokshTsDZo4pndIAUYVebrkCy7LUEuqRw730s-etOs`;
         store.commit('token', accessToken)
+        console.log("token::: " + accessToken);
         console.log("log Value::: " + res.data);
         router.push({path: "/"});
-        localStorage.setItem("token", accessToken)// sessionStorage에 응답받은 ID값을 저장함
+        //localStorage.setItem("token", accessToken)// sessionStorage에 응답받은 ID값을 저장함
         window.alert("로그인하였습니다.");
-      }).catch(()=> {//로그인에 실패했을때 처리
+        // axios.post("/main").then(({data})=> { // 중괄호 {data}사용시 호출한 데이터를 바로 가져올 수 있음
+        //   //console.log(res);
+        //   state.items = data // 호출한 데이터를 state변수 안에 있는 items 배열에 담아줌
+        // })
+      }).catch((err)=> {//로그인에 실패했을때 처리
+        console.log("res::: " + err);
+        console.log("res.data::: " + err.data);
         window.alert("로그인 정보가 존재하지 않습니다.");
       })
 
