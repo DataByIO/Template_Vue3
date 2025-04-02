@@ -1,7 +1,8 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue';
 import store from "@/scripts/store";
 import router from "@/scripts/router";
-import App from './App.vue'
+import App from './App.vue';
+import axios from 'axios';
 
 /*************************************************************
  /* SYSTEM NAME      : src
@@ -16,5 +17,45 @@ import App from './App.vue'
  /*2025.03.21   KIMDONGMIN   Vue vuex: Vuex는 Vue.js에서 사용하는 상태 관리 라이브러리, 모든 데이터 통신을 한 곳에서 중앙 집중식으로 관리하는 패턴
  /*************************************************************/
 
+// 요청 인터셉터 설정 (모든 axios 요청에 대해 자동으로 토큰을 추가)
+axios.interceptors.request.use(
+    function(config) {
+     const token = store.state.token; // store에서 token을 가져옵니다.
+     if (token) {
+      config.headers['access'] = token; // 모든 요청에 자동으로 토큰을 추가
+     }
+     return config;
+    },
+    function(error) {
+     return Promise.reject(error);
+    }
+);
 
-createApp(App).use(store).use(router).mount('#app')
+// 응답 인터셉터 설정 (응답 실패 시 처리)
+axios.interceptors.response.use(
+    function(response) {
+     return response;
+    },
+    function(error) {
+     if (error.response && error.response.status === 401) {
+         // 401 에러 처리: AccessToken 만료
+         // 1) Cookie 영역에 refreshToken이 있을 경우
+         //    ㄴ post /reissue 요청으로 토큰 발급 후 헤더 영역에 다시 세팅
+         window.alert("[401 - Token 만료] 로그인 정보가 유효하지 않습니다.");
+         // 2) 없을경우
+         //    ㄴ login Page 호출
+         router.push({ path: "/login" }); // 로그인 페이지로 리다이렉트
+     }if (error.response && error.response.status === 400) {
+         // 400 에러 처리: refreshToken 만료
+         window.alert("[400 - refreshToken 만료] 로그인 정보가 유효하지 않습니다.");
+         router.push({ path: "/login" }); // 로그인 페이지로 리다이렉트
+        }
+     return Promise.reject(error);
+    }
+);
+
+// 애플리케이션 시작
+createApp(App)
+    .use(store)  // Vuex store 사용
+    .use(router) // Vue Router 사용
+    .mount('#app'); // 애플리케이션 마운트

@@ -48,8 +48,7 @@ export default {
         let accessToken = res.headers['access'];
         axios.defaults.headers.common[
             'access'
-            ] = `
-eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJuYW1lIjoi7YWM7Iqk7Yq4Iiwicm9sZSI6IlJPTEVfQURNSU4iLCJpYXQiOjE3NDM0OTAwMDAsImV4cCI6MTc0MzQ5MDYwMH0.KvokshTsDZo4pndIAUYVebrkCy7LUEuqRw730s-etOs`;
+            ] = `${accessToken}`;
         store.commit('token', accessToken)
         console.log("token::: " + accessToken);
         console.log("log Value::: " + res.data);
@@ -60,9 +59,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJuYW1lIjoi7YWM7Iqk7Yq4Iiw
         //   //console.log(res);
         //   state.items = data // 호출한 데이터를 state변수 안에 있는 items 배열에 담아줌
         // })
-      }).catch((err)=> {//로그인에 실패했을때 처리
-        console.log("res::: " + err);
-        console.log("res.data::: " + err.data);
+      }).catch(()=> {//로그인에 실패했을때 처리
         window.alert("로그인 정보가 존재하지 않습니다.");
       })
 
