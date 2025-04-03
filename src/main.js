@@ -45,7 +45,6 @@ axios.interceptors.response.use(
          window.alert("[401 - AccessTokenToken 만료] 로그인 정보가 유효하지 않습니다.");
          // 2) 없을경우
          //    ㄴ login Page 호출
-         router.push({ path: "/reissue" }); // 로그인 페이지로 리다이렉트
      }if (error.response && error.response.status === 400) {
          // 400 에러 처리: refreshToken 만료
          window.alert("[400 - refreshToken 만료] 로그인 정보가 유효하지 않습니다.");
