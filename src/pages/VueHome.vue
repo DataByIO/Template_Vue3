@@ -21,11 +21,7 @@
 import axios from "axios";
 import {reactive} from "vue";
 import VueCard from "@/components/VueCard.vue";
-import store from '@/scripts/store';
 
-const token = store.state.token;
-
-console.log ("Home Token ::: " + token);
 
 export default {
   name: 'VueHome',
@@ -36,13 +32,8 @@ export default {
     })
 
     axios.get("/api/items").then(({data})=> { // 중괄호 {data}사용시 호출한 데이터를 바로 가져올 수 있음
-      //console.log(res);
       state.items = data // 호출한 데이터를 state변수 안에 있는 items 배열에 담아줌
     })
-
-
-
-
     return {state}
   }
 }

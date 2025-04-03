@@ -10,7 +10,10 @@
                 <router-link to="/" class="text-white">메인화면</router-link>
               </li>
               <li>
-                <router-link to="/loginpage" class="text-white" v-if="!$store.state.token">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
+                <p to="/login" class="text-white" v-if="$store.state.id">{{$store.state.id}} ({{$store.state.username}})님 안녕하세요</p>
+              </li>
+              <li>
+                <router-link to="/loginpage" class="text-white" v-if="!$store.state.id">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
                 <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a> <!-- store영역에 반대로 값이 있다면 로그아웃 버튼 활성화 -->
               </li>
             </ul>
@@ -33,19 +36,27 @@
 </template>
 
 <script>
+//import store from "@/scripts/store";
+import axios from "axios";
+import router from "@/scripts/router";
 import store from "@/scripts/store";
-//import router from "@/scripts/router";
-const accessToken = store.state.token;
-console.log ("Header Token ::: " + accessToken);
+
 export default {
   name: 'VueHeader',
-  // setup(){
-  //   const logout = () => {
-  //     //store.commit("setAccount",0);
-  //     //sessionStorage.removeItem("id");// 로그인 정보가 없으면 sessionStorage에 id값을 비워줌
-  //     //router.push({path:"/"});
-  //   }
-  //   return {logout};
-  // }
+  setup(){
+    const logout = () => {
+      axios.postForm("/logout").then(() => {
+        store.commit("setId", null);
+        store.commit("setUsername", null);
+        store.commit("setRole", null);
+        //const accessToken = store.state.token;
+        //console.log ("Header Token 삭제 후 ::: " + accessToken);
+        router.push({path: "/"});
+      }).catch(() => {//실패했을때 처리
+        window.alert("요청에 실패했습니다.");
+      })
+    }
+    return {logout};
+  }
 }
 </script>
