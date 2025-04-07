@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <div class="collapse bg-dark" id="navbarHeader">
+  <header @mouseover="showNav" @mouseout="hideNav">
+    <div class="collapse bg-dark " :class="{ show: isNavVisible }" id="navbarHeader">
       <div class="container">
         <div class="row">
           <div class="col-sm-4 py-4">
@@ -10,11 +10,11 @@
                 <router-link to="/" class="text-white">메인화면</router-link>
               </li>
               <li>
-                <p to="/login" class="text-white" v-if="$store.state.id">{{$store.state.id}} ({{$store.state.username}})님 안녕하세요</p>
+                <p to="/login" class="text-white" v-if="$store.state.id">{{ $store.state.id }} ({{ $store.state.username }})님 안녕하세요</p>
               </li>
               <li>
-                <router-link to="/loginpage" class="text-white" v-if="!$store.state.id">로그인</router-link><!-- store영역에 값이 없으면 로그인 버튼 활성화 -->
-                <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a> <!-- store영역에 반대로 값이 있다면 로그아웃 버튼 활성화 -->
+                <router-link to="/loginpage" class="text-white" v-if="!$store.state.id">로그인</router-link>
+                <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a>
               </li>
             </ul>
           </div>
@@ -36,27 +36,34 @@
 </template>
 
 <script>
-//import store from "@/scripts/store";
 import axios from "axios";
 import router from "@/scripts/router";
 import store from "@/scripts/store";
 
 export default {
   name: 'VueHeader',
-  setup(){
-    const logout = () => {
+  data() {
+    return {
+      isNavVisible: false // 초기 상태에서 nav는 숨겨져 있음
+    };
+  },
+  methods: {
+    showNav() {
+      this.isNavVisible = true; // 마우스가 올라가면 사이드바 보이도록
+    },
+    hideNav() {
+      this.isNavVisible = false; // 마우스가 벗어나면 사이드바 숨기기
+    },
+    logout() {
       axios.postForm("/logout").then(() => {
         store.commit("setId", null);
         store.commit("setUsername", null);
         store.commit("setRole", null);
-        //const accessToken = store.state.token;
-        //console.log ("Header Token 삭제 후 ::: " + accessToken);
-        router.push({path: "/"});
-      }).catch(() => {//실패했을때 처리
+        router.push({ path: "/" });
+      }).catch(() => {
         window.alert("요청에 실패했습니다.");
-      })
+      });
     }
-    return {logout};
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import VueHome from "@/pages/VueHome.vue";
 import VueLogin from "@/pages/VueLogin.vue";
+import VueJoin from "@/pages/VueJoin.vue";
 import {createRouter, createWebHistory} from "vue-router";
 
 /*************************************************************
@@ -16,7 +17,8 @@ import {createRouter, createWebHistory} from "vue-router";
 
 const routes = [
     {path: '/', component: VueHome},
-    {path: '/loginpage', component: VueLogin}
+    {path: '/loginpage', component: VueLogin},
+    {path: '/join', component: VueJoin}
 ]
 
 const router = createRouter({

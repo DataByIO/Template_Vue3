@@ -42,13 +42,13 @@ axios.interceptors.response.use(
          // 401 에러 처리: AccessToken 만료
          // 1) Cookie 영역에 refreshToken이 있을 경
          //    ㄴ post /reissue 요청으로 토큰 발급 후 헤더 영역에 다시 세팅
-         window.alert("[401 - AccessTokenToken 만료] 로그인 정보가 유효하지 않습니다.");
+         router.push({ path: "/loginpage" }); // 로그인 페이지로 리다이렉트
          // 2) 없을경우
          //    ㄴ login Page 호출
      }if (error.response && error.response.status === 400) {
          // 400 에러 처리: refreshToken 만료
          window.alert("[400 - refreshToken 만료] 로그인 정보가 유효하지 않습니다.");
-         router.push({ path: "/login" }); // 로그인 페이지로 리다이렉트
+         router.push({ path: "/loginpage" }); // 로그인 페이지로 리다이렉트
         }
      return Promise.reject(error);
     }

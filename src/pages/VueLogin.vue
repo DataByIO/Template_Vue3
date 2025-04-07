@@ -1,24 +1,43 @@
 <template>
-  <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-             v-model="state.from.username">
-      <label for="floatingInput">Id address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-             v-model="state.from.password">
-      <label for="floatingPassword">Password</label>
+  <div class="login-container">
+    <img src="https://www.11st.co.kr/static/images/common/logo_header_2023.png" alt="로고" class="logo">
+    <form>
+      <!-- ID 입력 필드 -->
+      <div class="mb-3">
+        <input type="email" class="form-control" id="id" placeholder="아이디를 입력하세요" v-model="state.from.username">
+      </div>
+
+      <!-- PW 입력 필드 -->
+      <div class="mb-3">
+        <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요" v-model="state.from.password">
+      </div>
+
+      <!-- 로그인 버튼 -->
+      <button type="submit" class="btn btn-primary w-100" @click="submit()">로그인</button>
+    </form>
+
+    <!-- 소셜 로그인 버튼들 -->
+    <div class="social-login-btn">
+      <a href="#" class="kakao" title="카카오톡으로 로그인">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/KakaoTalk_Logo_2020.png" alt="카카오톡" width="24" height="24">
+      </a>
+      <a href="#" class="naver" title="네이버로 로그인">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Naver_logo_2019.svg" alt="네이버" width="24" height="24">
+      </a>
+      <a href="#" class="apple" title="애플로 로그인">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Apple_logo_black.svg" alt="애플" width="24" height="24">
+      </a>
+      <a href="#" class="google" title="구글로 로그인">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Google_2015_logo.svg" alt="구글" width="24" height="24">
+      </a>
     </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
+    <!-- 추가 링크들 -->
+    <div class="footer-links">
+      <a href="#">아이디 찾기</a> ·
+      <a href="#">비밀번호 찾기</a> ·
+      <router-link to="/join">회원가입</router-link>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" @click="submit()">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2023</p>
   </div>
 </template>
 
@@ -49,7 +68,6 @@ export default {
         window.alert("로그인하였습니다.");
         test()
       }).catch(()=> {//로그인에 실패했을때 처리
-        window.alert("로그인 정보가 존재하지 않습니다.");
       })
     }
 
@@ -62,6 +80,7 @@ export default {
       }).catch(()=> {//로그인에 실패했을때 처리
         window.alert("회원정보 조회에 실패했습니다.");
       })
+
     }
     return {state, submit}
   }
@@ -69,24 +88,90 @@ export default {
 </script>
 
 <style>
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
+body {
+  background-color: #f4f5f7;
 }
 
-.form-signin .form-floating:focus-within {
-  z-index: 2;
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+.logo {
+  display: block;
+  margin: 0 auto 30px;
+  width: 120px;
 }
 
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+}
+
+.btn-primary {
+  background-color: #1e80c1;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #156a96;
+}
+
+.social-login-btn {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.social-login-btn a {
+  display: inline-block;
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.kakao { background-color: #FEE500; }
+.naver { background-color: #03C75A; }
+.apple { background-color: #000; }
+.google { background-color: #DB4437; }
+
+.social-login-btn a:hover {
+  opacity: 0.9;
+}
+
+.footer-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-links a {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
 }
 </style>
