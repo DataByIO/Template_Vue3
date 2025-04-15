@@ -1,108 +1,343 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>쇼핑몰 헤더</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WDN 물류솔루션 - 헤더 배경 변경</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <style>
-        .header {
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            padding: 0.75rem 1rem;
-            position: sticky;
+        /* 기본 다크 모드 & 초기 헤더 스타일 */
+        body {
+            background-color: #bfbfbf;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        /* 헤더: 초기 배경은 투명, 스크롤 시 변경됨 */
+        header {
+            position: fixed; /* 스크롤 시 헤더가 따라오도록 고정 */
             top: 0;
-            z-index: 1040;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease; /* 부드러운 배경색 전환 */
+            background-color: transparent;
         }
 
-        .search-form {
-            min-width: 300px;
-            width: 40%;
+        /* 헤더 내부 네비게이션 스타일 (다크모드에 맞게) */
+        .navbar {
+            padding: 1rem 0;
+        }
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 8px;
+        }
+        .navbar-nav .nav-link {
+            color: #eee !important;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffd63d !important;
+        }
+        .navbar-toggler-icon {
+            filter: invert(1);
         }
 
-        .dropdown-menu {
-            min-width: 200px;
+        /* 풀페이지 예시 컨텐츠 */
+        .content {
+            margin-top: 80px; /* 헤더 높이만큼 여백 추가 */
+            height: 2000px; /* 스크롤 테스트용 높이 */
+            padding: 2rem;
+        }
+        /* 커스텀 햄버거 아이콘 (흰색, 보더 없음) */
+        .hamburger-icon {
+            position: relative;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+            margin: auto;
         }
 
-        .offcanvas-body ul {
-            padding-left: 0;
-            list-style: none;
+        /* 위, 아래 선 */
+        .hamburger-icon::before,
+        .hamburger-icon::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
         }
 
-        .offcanvas-body ul li a {
-            display: block;
-            padding: 0.75rem 0;
-            text-decoration: none;
-            color: #333;
+        .hamburger-icon::before {
+            top: -8px;
+            left: 0px;
+        }
+
+        .hamburger-icon::after {
+            top: 8px;
+            left: 0px;
+        }
+
+        /* 버튼(토글) 상태에 따라 아이콘 변환 */
+        /* 기본 상태: 햄버거 모양은 custom-toggler에 "collapsed" 클래스가 기본적으로 추가됩니다. */
+        .custom-toggler {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* 토글 버튼 열림 상태(.collapsed가 제거된 상태)일 때 아이콘 변경 */
+        .custom-toggler:not(.collapsed) .hamburger-icon {
+            background-color: transparent;
+        }
+        .custom-toggler:not(.collapsed) .hamburger-icon::before {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .custom-toggler:not(.collapsed) .hamburger-icon::after {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* 풀페이지 Hero 섹션 */
+        .hero-section {
+            height: 100vh; /* 뷰포트 전체 높이 */
+            background: url("") no-repeat center center;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Hero 섹션에 어두운 오버레이 처리 (텍스트 가독성 향상) */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+        }
+        .hero-section {
+            height: 100vh; /* 뷰포트 전체 높이 */
+            background: url("https://via.placeholder.com/1920x1080") no-repeat center center;
+            background-size: cover;
+            position: relative;
+            display: flex;               /* 플렉스 박스 사용 */
+            align-items: center;         /* 수직 중앙 정렬 */
+            justify-content: center;     /* 수평 중앙 정렬 */
+            text-align: center;
+            color: #fff;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            color: #fff;
+            transform: translateY(-30%);
+        }
+
+        .bg-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /* 화면 채움 */
+            z-index: 0;         /* 오버레이, 텍스트보다 아래 */
+        }
+
+        /* Scroll Indicator 컨테이너 */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            z-index: 3;
+            transition: opacity 0.3s ease;  /* 부드러운 전환 효과 */
+            opacity: 1;  /* 추가: 초기 선명도 */
+        }
+        /* 원형 텍스트 애니메이션 */
+        .scroll-indicator svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 0.5;
+            animation: rotate 4s linear infinite;
+        }
+        .scroll-indicator text {
+            font-size: 10px;
+            fill: #fff;
+        }
+        /* 중앙에 배치할 간단한 마우스 아이콘 (테두리로 마우스 모양 표현) */
+        .scroll-indicator .mouse-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 30px;
+            border: 2px solid #fff;
+            border-radius: 12px;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-
-<!-- 헤더 -->
-<header class="header">
-    <div class="container d-flex align-items-center justify-content-between">
-        <!-- 왼쪽: 햄버거 버튼 -->
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
-            <i class="bi bi-list fs-6"></i>
-        </button>
-
-        <!-- 가운데: 검색창 (왼쪽 여백 설정을 위해 me-auto 사용) -->
-        <form class="d-flex search-form mx-4">
-            <input class="form-control me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="submit">
-                <i class="bi bi-search"></i>
+<!-- 헤더 영역 -->
+<header id="mainHeader">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <!-- 로고 -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+<!--                <img src="https://via.placeholder.com/60x40/FF8300/FFFFFF?text=Logo" alt="WDN 로고" />-->
+                <span style="color: #FF8300; font-weight: bold;">TESTLOGO</span>
+            </a>
+            <!-- 모바일 햄버거 버튼 -->
+            <button class="navbar-toggler collapsed custom-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger-icon"></div>
             </button>
-        </form>
-
-        <!-- 오른쪽: 유저 드롭다운 + 장바구니 -->
-        <div class="d-flex align-items-center gap-4">
-            <!-- 유저 드롭다운 -->
-            <div class="dropdown">
-                <a href="#" class="text-dark text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle fs-4"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">나의 쿠폰</a></li>
-                    <li><a class="dropdown-item" href="#">주문/배송조회</a></li>
-                    <li><a class="dropdown-item" href="#">취소/반품/교환</a></li>
-                    <li><a class="dropdown-item" href="#">고객센터</a></li>
-                    <li><a class="dropdown-item" href="#">회원정보</a></li>
+            <!-- 중앙 정렬 메뉴 (검색 버튼은 제외) -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">회사소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">사업소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">R&D</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">고객센터</a>
+                    </li>
                 </ul>
             </div>
-
-            <!-- 장바구니 아이콘 -->
-            <a href="#" class="text-dark text-decoration-none position-relative">
-                <i class="bi bi-cart3 fs-4"></i>
-                <!-- 뱃지 예시 -->
-                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span> -->
-            </a>
         </div>
-    </div>
+    </nav>
 </header>
 
-<!-- 사이드 메뉴 (Offcanvas) -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">카테고리</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <ul>
-            <li><a href="#">여성 패션</a></li>
-            <li><a href="#">남성 패션</a></li>
-            <li><a href="#">잡화</a></li>
-            <li><a href="#">베스트</a></li>
-            <li><a href="#">신상품</a></li>
-        </ul>
-    </div>
-</div>
+<!-- 풀페이지 Hero 섹션 -->
+<section class="hero-section">
+    <!-- 배경 비디오 -->
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="./vidoes.mp4" type="video/mp4">
+        브라우저가 비디오 태그를 지원하지 않습니다.
+    </video>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+        <h1>환영합니다!</h1>
+        <p>이곳은 임시로 제작한 풀페이지 메인 화면입니다.</p>
+    </div>
+    <!-- 스크롤 애니메이션 인디케이터 -->
+    <div class="scroll-indicator">
+        <svg viewBox="0 0 100 100">
+            <defs>
+                <path id="circlePath" d="M50,50 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0"/>
+            </defs>
+            <text>
+                <textPath xlink:href="#circlePath" startOffset="50%" text-anchor="middle">
+                    SCROLL DOWN • SCROLL DOWN • SCROLL DOWN • SCROLL DOWN •
+                </textPath>
+            </text>
+        </svg>
+        <div class="mouse-icon">'</div>
+    </div>
+</section>
+
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+        <h1>테스트섹션</h1>
+        <p>이곳은 임시로 제작한 풀페이지 메인 화면입니다.</p>
+    </div>
+</section>
+<!-- Bootstrap 5 JS (Popper 포함) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 스크롤 이벤트로 헤더 배경색 변경 -->
+<script>
+    const header = document.getElementById("mainHeader");
+    const mainNavbar = document.getElementById("mainNavbar");
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    let isMenuOpen = false;
+
+    window.addEventListener("scroll", () => {
+        if (isMenuOpen) {
+            header.style.backgroundColor = "black";
+        } else {
+            header.style.backgroundColor = window.pageYOffset > 50 ? "black" : "transparent";
+        }
+    });
+
+    mainNavbar.addEventListener('shown.bs.collapse', () => {
+        isMenuOpen = true;
+        header.style.backgroundColor = "black";
+    });
+
+    mainNavbar.addEventListener('hidden.bs.collapse', () => {
+        isMenuOpen = false;
+        header.style.backgroundColor = window.pageYOffset < 50 ? "transparent" : "black";
+    });
+
+    document.addEventListener('click', function(event) {
+        const navbarCollapse = document.getElementById('mainNavbar');
+        const toggleButton = document.querySelector('.navbar-toggler');
+        if (
+            !navbarCollapse.contains(event.target) &&
+            !toggleButton.contains(event.target) &&
+            navbarCollapse.classList.contains('show')
+        ) {
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+            if (bsCollapse) bsCollapse.hide();
+        }
+    });
+
+    // 스크롤 인디케이터 opacity 제어
+    let indicatorOpacity = 1;
+
+    window.addEventListener('wheel', (event) => {
+        if (event.deltaY > 0) {
+            indicatorOpacity = Math.max(0, indicatorOpacity - 0.2);
+        } else {
+            indicatorOpacity = Math.min(1, indicatorOpacity + 0.2);
+        }
+        scrollIndicator.style.opacity = indicatorOpacity.toFixed(2);
+    });
+</script>
 </body>
 </html>
