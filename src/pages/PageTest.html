@@ -113,7 +113,6 @@
             color: #fff;
             text-align: center;
         }
-
         /* Hero 섹션에 어두운 오버레이 처리 (텍스트 가독성 향상) */
         .hero-overlay {
             position: absolute;
@@ -165,6 +164,79 @@
             object-fit: cover;  /* 화면 채움 */
             z-index: 0;         /* 오버레이, 텍스트보다 아래 */
         }
+        /* 2번 세션영역 */
+        .strategy-section {
+            position: relative;
+            background-color: #000;
+            background-image: url('grid-tunnel.png'); /* 실제 이미지로 교체 */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 120px 20px;
+            text-align: left;
+        }
+
+        .strategy-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .strategy-section .mid-text {
+            color: #ccc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease-out;
+        }
+        .strategy-section .mid-text.active {
+            animation: slideInRight 1.5s ease-out forwards;
+        }
+
+        .strategy-section .btn-group .btn {
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up-target {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease-out;
+        }
+
+        .fade-up-target.active {
+            animation: fadeUp 0.7s ease-out forwards;
+        }
+
+        .strategy-section strong:first-of-type {
+            display: inline-block; /* transform 적용 위해 */
+            animation: fadeUp 0.7s ease-out forwards;
+            animation-delay: 0.7s; /* 딜레이는 필요에 따라 */
+            opacity: 0; /* 시작은 숨김 */
+        }
+
+        .strategy-section strong:first-of-type {
+            display: inline-block; /* transform 적용 위해 */
+            animation: fadeUp 0.7s ease-out forwards;
+            animation-delay: 0.7s; /* 딜레이는 필요에 따라 */
+            opacity: 0; /* 시작은 숨김 */
+        }
 
         /* Scroll Indicator 컨테이너 */
         .scroll-indicator {
@@ -172,8 +244,8 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             z-index: 3;
             transition: opacity 0.3s ease;  /* 부드러운 전환 효과 */
             opacity: 1;  /* 추가: 초기 선명도 */
@@ -207,6 +279,18 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -279,13 +363,41 @@
     </div>
 </section>
 
-<section class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-        <h1>테스트섹션</h1>
-        <p>이곳은 임시로 제작한 풀페이지 메인 화면입니다.</p>
+<!-- 두 번째 section -->
+<section class="strategy-section">
+    <div class="container">
+        <h2><strong class="fade-up-target">지식 네트워크 기반의<br></strong></br><strong>혁신형 융합 비즈니스를 지향합니다.</strong></h2>
+        <p class="mid-text">
+            기업 및 화주의 물류센터 구축 전반과 토탈물류아웃소싱, 3PL물류센터의 화주 유치,<br>
+            풀필먼트센터 구축과 아웃소싱전략을 추진함에 있어서 진단 - 전략수립 - 전환 실행 및 운영에 이르기까지<br>
+            풍부한 물류 현장 경험과 다양한 융합 역량을 바탕으로 최적의 컨설팅 & 솔루션을 제공하고 있습니다.
+        </p>
+        <div class="btn-group">
+            <a href="#" class="btn btn-outline-light me-2">Read More</a>
+            <a href="#" class="btn btn-outline-light">
+                <span>→</span>
+            </a>
+        </div>
     </div>
 </section>
+
+<section class="strategy-section">
+    <div class="container">
+        <h2><strong class="fade-up-target">지식 네트워크 기반의<br></strong></br><strong>혁신형 융합 비즈니스를 지향합니다.</strong></h2>
+        <p class="mid-text">
+            기업 및 화주의 물류센터 구축 전반과 토탈물류아웃소싱, 3PL물류센터의 화주 유치,<br>
+            풀필먼트센터 구축과 아웃소싱전략을 추진함에 있어서 진단 - 전략수립 - 전환 실행 및 운영에 이르기까지<br>
+            풍부한 물류 현장 경험과 다양한 융합 역량을 바탕으로 최적의 컨설팅 & 솔루션을 제공하고 있습니다.
+        </p>
+        <div class="btn-group">
+            <a href="#" class="btn btn-outline-light me-2">Read More</a>
+            <a href="#" class="btn btn-outline-light">
+                <span>→</span>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- Bootstrap 5 JS (Popper 포함) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 스크롤 이벤트로 헤더 배경색 변경 -->
@@ -338,6 +450,25 @@
         }
         scrollIndicator.style.opacity = indicatorOpacity.toFixed(2);
     });
+
+    const target = document.querySelector('.fade-up-target');
+    const midText = document.querySelector('.mid-text');
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // 한 번만 애니메이션 실행
+                }
+            });
+        },
+        {
+            threshold: 0.6 // 화면의 60% 정도 들어왔을 때 실행
+        }
+    );
+
+    if (target) observer.observe(target);
+    if (midText) observer.observe(midText); // mid-text에도 적용
 </script>
 </body>
 </html>
