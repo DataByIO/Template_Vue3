@@ -3,6 +3,8 @@ import store from "@/scripts/store";
 import router from "@/scripts/router";
 import App from './App.vue';
 import axios from 'axios';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
 
 
 /*************************************************************

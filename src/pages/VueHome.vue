@@ -22,10 +22,11 @@ import axios from "axios";
 import {reactive} from "vue";
 import VueCard from "@/components/VueCard.vue";
 
-
 export default {
   name: 'VueHome',
-  components:{Card: VueCard},// 가지고온 VueCard를 해당 페이지에서 Card라는 태그로 component화 시켜서 사용할 수 있도록 지정
+  components: {
+    Card: VueCard
+  },// 가지고온 VueCard를 해당 페이지에서 Card라는 태그로 component화 시켜서 사용할 수 있도록 지정
   setup(){
     const state = reactive({
       items:[]

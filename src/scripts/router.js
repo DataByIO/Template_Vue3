@@ -1,8 +1,5 @@
-import VueHome from "@/pages/VueHome.vue";
-import VueLogin from "@/pages/VueLogin.vue";
-import VueJoin from "@/pages/VueJoin.vue";
-import {createRouter, createWebHistory} from "vue-router";
-
+import { createRouter, createWebHistory } from 'vue-router'
+import { defineAsyncComponent } from 'vue'
 /*************************************************************
  /* SYSTEM NAME      : scripts
  /* PROGRAM NAME     : router.js
@@ -14,11 +11,32 @@ import {createRouter, createWebHistory} from "vue-router";
  /*2025.03.21   KIMDONGMIN   INTIAL RELEASE
  /*2025.03.21   KIMDONGMIN   Vue router(페이지 이동) Add
  /*************************************************************/
-
+// ✅ router.js (src/scripts/router.js)
 const routes = [
-    {path: '/', component: VueHome},
-    {path: '/loginpage', component: VueLogin},
-    {path: '/join', component: VueJoin}
+    {
+        path: '/',
+        name: 'Home',
+        component: defineAsyncComponent(() => {
+            console.log('[Router] Loading Home')
+            return import('../pages/VueHome.vue')
+        })
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: defineAsyncComponent(() => {
+            console.log('[Router] Loading Login')
+            return import('../pages/VueLogin.vue')
+        })
+    },
+    {
+        path: '/join',
+        name: 'Join',
+        component: defineAsyncComponent(() => {
+            console.log('[Router] Loading Join')
+            return import('../pages/VueJoin.vue')
+        })
+    }
 ]
 
 const router = createRouter({
@@ -26,5 +44,6 @@ const router = createRouter({
     routes
 })
 
+console.log('[Router] initialized')
 
-export default router;
+export default router

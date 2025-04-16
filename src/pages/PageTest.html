@@ -217,17 +217,17 @@
             display: inline-block;
             opacity: 0;
             transform: translateY(40px);
-            transition: all 0.7s ease-out;
+            transition: all 1s ease-out;
         }
 
         .fade-up-target.active {
-            animation: fadeUp 0.7s ease-out forwards;
+            animation: fadeUp 1.5s ease-out forwards;
         }
 
         .strategy-section strong:first-of-type {
             display: inline-block; /* transform 적용 위해 */
-            animation: fadeUp 0.7s ease-out forwards;
-            animation-delay: 0.7s; /* 딜레이는 필요에 따라 */
+            animation: fadeUp 1.5s ease-out forwards;
+            animation-delay: 1.5s; /* 딜레이는 필요에 따라 */
             opacity: 0; /* 시작은 숨김 */
         }
 
@@ -405,7 +405,6 @@
     const header = document.getElementById("mainHeader");
     const mainNavbar = document.getElementById("mainNavbar");
     const scrollIndicator = document.querySelector('.scroll-indicator');
-
     let isMenuOpen = false;
 
     window.addEventListener("scroll", () => {

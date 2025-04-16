@@ -1,69 +1,141 @@
 <template>
-  <header @mouseover="showNav" @mouseout="hideNav">
-    <div class="collapse bg-dark " :class="{ show: isNavVisible }" id="navbarHeader">
+  <header id="mainHeader">
+    <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-4 py-4">
-            <h4 class="text-white">사이트맵</h4>
-            <ul class="list-unstyled">
-              <li>
-                <router-link to="/" class="text-white">메인화면</router-link>
-              </li>
-              <li>
-                <p to="/login" class="text-white" v-if="$store.state.id">{{ $store.state.id }} ({{ $store.state.username }})님 안녕하세요</p>
-              </li>
-              <li>
-                <router-link to="/loginpage" class="text-white" v-if="!$store.state.id">로그인</router-link>
-                <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a>
-              </li>
-            </ul>
-          </div>
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <span style="color: #FF8300; font-weight: bold;">TESTLOGO</span>
+        </a>
+        <button
+            class="navbar-toggler collapsed custom-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+          <div class="hamburger-icon"></div>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item" v-for="(menu, i) in menus" :key="i">
+              <a class="nav-link" href="#">{{ menu }}</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-      <div class="container">
-        <a href="#" class="navbar-brand d-flex align-items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          <strong>Album</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-    </div>
+    </nav>
   </header>
 </template>
 
-<script>
-import axios from "axios";
-import router from "@/scripts/router";
-import store from "@/scripts/store";
+<script setup>
+import { onMounted } from 'vue'
 
-export default {
-  name: 'VueHeader',
-  data() {
-    return {
-      isNavVisible: false // 초기 상태에서 nav는 숨겨져 있음
-    };
-  },
-  methods: {
-    showNav() {
-      this.isNavVisible = true; // 마우스가 올라가면 사이드바 보이도록
-    },
-    hideNav() {
-      this.isNavVisible = false; // 마우스가 벗어나면 사이드바 숨기기
-    },
-    logout() {
-      axios.postForm("/logout").then(() => {
-        store.commit("setId", null);
-        store.commit("setUsername", null);
-        store.commit("setRole", null);
-        router.push({ path: "/" });
-      }).catch(() => {
-        window.alert("요청에 실패했습니다.");
-      });
+const menus = ['회사소개', '사업소개', '서비스', 'R&D', '고객센터']
+
+onMounted(() => {
+  const header = document.getElementById("mainHeader")
+  const mainNavbar = document.getElementById("mainNavbar")
+  let isMenuOpen = false
+
+  window.addEventListener("scroll", () => {
+    if (isMenuOpen) {
+      header.style.backgroundColor = "black";
+    } else {
+      header.style.backgroundColor = window.pageYOffset > 50 ? "black" : "transparent";
     }
-  }
-}
+  })
+
+  // 메뉴 열리고 닫힐 때 상태 변경
+  mainNavbar.addEventListener('shown.bs.collapse', () => {
+    isMenuOpen = true
+    header.style.backgroundColor = "black"
+  })
+  mainNavbar.addEventListener('hidden.bs.collapse', () => {
+    isMenuOpen = false
+    header.style.backgroundColor = window.pageYOffset < 50 ? "transparent" : "black"
+  })
+
+  // 바깥 클릭 시 메뉴 닫기 (Collapse 인스턴스 없이 처리)
+  document.addEventListener('click', (event) => {
+    const navbarCollapse = document.getElementById('mainNavbar');
+    const toggleButton = document.querySelector('.navbar-toggler');
+    if (
+        !navbarCollapse.contains(event.target) &&
+        !toggleButton.contains(event.target) &&
+        navbarCollapse.classList.contains('show')
+    ) {
+      const bsCollapse = window.bootstrap.Collapse.getInstance(navbarCollapse);
+      if (bsCollapse) bsCollapse.hide();
+    }
+  })
+})
 </script>
+
+<style scoped>
+.navbar {
+  padding: 1rem 0;
+}
+.navbar-brand img {
+  height: 40px;
+  margin-right: 8px;
+}
+.navbar-nav .nav-link {
+  color: #eee !important;
+  font-weight: 500;
+  margin: 0 10px;
+}
+.navbar-nav .nav-link:hover {
+  color: #ffd63d !important;
+}
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+.custom-toggler {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.hamburger-icon {
+  position: relative;
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+  margin: auto;
+}
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.hamburger-icon::before {
+  top: -8px;
+  left: 0px;
+}
+.hamburger-icon::after {
+  top: 8px;
+  left: 0px;
+}
+.custom-toggler:not(.collapsed) .hamburger-icon {
+  background-color: transparent;
+}
+.custom-toggler:not(.collapsed) .hamburger-icon::before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.custom-toggler:not(.collapsed) .hamburger-icon::after {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  background-color: transparent;
+}
+</style>
