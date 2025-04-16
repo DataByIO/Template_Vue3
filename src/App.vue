@@ -20,9 +20,6 @@ export default {
 
 <style>
 
-body {
-  background-color: #000;
-}
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
@@ -31,8 +28,6 @@ body {
 
 #app {
   background-color: #000;
-  position: relative;
-  top: 72px;
 }
 
 

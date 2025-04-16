@@ -22,7 +22,7 @@ const routes = [
         })
     },
     {
-        path: '/login',
+        path: '/loginpage',
         name: 'Login',
         component: defineAsyncComponent(() => {
             console.log('[Router] Loading Login')
